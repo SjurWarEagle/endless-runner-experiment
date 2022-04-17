@@ -19,7 +19,7 @@ export default class Game extends Phaser.Scene {
 
     public init() {
         this.score = 0;
-        this.lives = 3;
+        this.lives = 1;
     }
 
     constructor() {
@@ -234,6 +234,9 @@ export default class Game extends Phaser.Scene {
 
     private missedObstacle() {
         this.lives--;
+        if (this.lives <= 0) {
+            this.mouse.kill();
+        }
         this.liveLabel.text = `Lives: ${this.lives}`;
     }
 }

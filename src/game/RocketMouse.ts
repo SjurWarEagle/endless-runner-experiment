@@ -90,16 +90,16 @@ export default class RocketMouse extends Phaser.GameObjects.Container {
     }
 
     kill() {
-        // // don't do anything if not in RUNNING state
-        // if (this.mouseState !== MouseState.Running) {
-        //     return
-        // }
-        // // set state to KILLED
-        // this.mouseState = MouseState.Killed
-        // this.mouse.play(AnimationKeys.RocketMouseDead)
-        // const body = this.body as Phaser.Physics.Arcade.Body
-        // body.setAccelerationY(0)
-        // body.setVelocity(400, 0)
-        // this.enableJetpack(false)
+        // don't do anything if not in RUNNING state
+        if (this.mouseState !== MouseState.Running) {
+            return
+        }
+        // set state to KILLED
+        this.mouseState = MouseState.Killed
+        this.mouse.play(AnimationKeys.RocketMouseDead)
+        const body = this.body as Phaser.Physics.Arcade.Body
+        body.setAccelerationY(0)
+        body.setVelocity(400, 0)
+        this.enableJetpack(false)
     }
 }
