@@ -32,5 +32,3 @@ RUN npm run build
 FROM nginx:stable-alpine
 RUN mkdir -p /project
 COPY --from=buildstage /project/dist /usr/share/nginx/html
-RUN ls -al /etc
-RUN ls -al /usr/share/nginx/html
