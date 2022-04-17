@@ -14,6 +14,7 @@ export default class RocketMouse extends Phaser.GameObjects.Container {
     private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     private mouse: Phaser.GameObjects.Sprite;
     private mouseState = MouseState.Running;
+    private mousebody: Phaser.Physics.Arcade.Body;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y)
@@ -33,51 +34,47 @@ export default class RocketMouse extends Phaser.GameObjects.Container {
         scene.physics.add.existing(this);
 
         // adjust physics body size and offset
-        const body = this.body as Phaser.Physics.Arcade.Body;
-        body.setSize(this.mouse.width, this.mouse.height);
-        body.setOffset(this.mouse.width * -0.5, -this.mouse.height);
+        this.mousebody = this.body as Phaser.Physics.Arcade.Body;
+        this.mousebody.setSize(this.mouse.width, this.mouse.height);
+        this.mousebody.setOffset(this.mouse.width * -0.5, -this.mouse.height);
 
         // get a CursorKeys instance
         this.cursors = scene.input.keyboard.createCursorKeys();
         // use half width and 70% of height
-        body.setSize(this.mouse.width * 0.5, this.mouse.height * 0.7);
-        body.setOffset(this.mouse.width * -0.3, -this.mouse.height + 15);
+        this.mousebody.setSize(this.mouse.width * 0.5, this.mouse.height * 0.7);
+        this.mousebody.setOffset(this.mouse.width * -0.3, -this.mouse.height + 15);
     }
 
     preUpdate() {
-        // switch on this.mouseState
-        const body = this.body as Phaser.Physics.Arcade.Body
+        this.body = this.body as Phaser.Physics.Arcade.Body
         switch (this.mouseState) {
             // move all previous code into this case
             case MouseState.Running: {
-                if (this.cursors.space?.isDown) {
-                    body.setAccelerationY(-600)
-                    this.enableJetpack(true)
-                    this.mouse.play(AnimationKeys.RocketMouseFly, true)
-                } else {
-                    body.setAccelerationY(0)
-                    this.enableJetpack(false)
-                }
-                if (body.blocked.down) {
-                    this.mouse.play(AnimationKeys.RocketMouseRun, true)
-                } else if (body.velocity.y > 0) {
-                    this.mouse.play(AnimationKeys.RocketMouseFall, true)
+                // if (this.cursors.space?.isDown) {
+                //     this.jump(true);
+                // } else {
+                //     // this.jump(false);
+                // }
+                if (this.body.blocked.down) {
+                    this.mouse.play(AnimationKeys.RocketMouseRun, true);
+                } else if (this.body.velocity.y > 0) {
+                    this.mouse.play(AnimationKeys.RocketMouseFall, true);
                 }
                 // don't forget the break statement
                 break
             }
             case MouseState.Killed: {
                 // reduce velocity to 99% of current value
-                body.velocity.x *= 0.99;
+                this.mousebody.velocity.x *= 0.99;
                 // once less than 5 we can say stop
-                if (body.velocity.x <= 5) {
+                if (this.mousebody.velocity.x <= 5) {
                     this.mouseState = MouseState.Dead;
                 }
                 break;
             }
             case MouseState.Dead: {
                 // make a complete stop
-                body.setVelocity(0, 0);
+                this.mousebody.setVelocity(0, 0);
                 this.scene.scene.run(SceneKeys.GameOver);
                 break;
             }
@@ -87,6 +84,19 @@ export default class RocketMouse extends Phaser.GameObjects.Container {
 
     enableJetpack(enabled: boolean) {
         this.flames.setVisible(enabled);
+    }
+
+    jump(active: boolean) {
+        if (active) {
+            this.mousebody.setAccelerationY(-600);
+            this.enableJetpack(true);
+            this.mouse.play(AnimationKeys.RocketMouseFly, true);
+        } else {
+            this.mousebody.setAccelerationY(0);
+            this.enableJetpack(false);
+            this.mouse.play(AnimationKeys.RocketMouseFall, true);
+        }
+
     }
 
     kill() {

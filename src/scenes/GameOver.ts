@@ -22,15 +22,19 @@ export default class GameOver extends Phaser.Scene {
         }).setOrigin(0.5);
 
         // listen for the Space bar getting pressed once
-        this.input.on('pointerdown', ()=>{
-            this.startJump();
-        });
+
+        if (this.game.input.activePointer.leftButtonDown()) {
+            this.startGame();
+        }
         this.input.keyboard.once('keydown-SPACE', () => {
-            this.startJump();
+            this.startGame();
         });
+        this.input.on('pointerdown', (pointer) => {
+            this.startGame();
+        })
     }
 
-    startJump(){
+    startGame(){
         // stop the GameOver scene
         this.scene.stop(SceneKeys.GameOver)
         // stop and restart the Game scene

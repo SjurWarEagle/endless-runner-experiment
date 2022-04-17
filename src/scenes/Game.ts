@@ -29,7 +29,6 @@ export default class Game extends Phaser.Scene {
     public create() {
         const height = this.scale.height;
         const width = this.scale.width;
-
         this.background = this.add.tileSprite(0, 0, width, height, TextureKeys.Background)
             .setOrigin(0, 0)
             .setScrollFactor(0, 0);
@@ -105,6 +104,21 @@ export default class Game extends Phaser.Scene {
             shadow: {fill: true, blur: 0, offsetY: 0},
             padding: {left: 15, right: 15, top: 10, bottom: 10}
         }).setScrollFactor(0)
+
+        this.input.mouse.disableContextMenu();
+        this.input.mouse.enabled = true;
+        this.input.on('pointerdown', (pointer) => {
+            this.mouse.jump(true);
+        });
+        this.input.on('pointerup', (pointer) => {
+            this.mouse.jump(false);
+        });
+        this.input.keyboard.on('keydown-SPACE', (pointer) => {
+            this.mouse.jump(true);
+        });
+        this.input.keyboard.on('keyup-SPACE', (pointer) => {
+            this.mouse.jump(false);
+        });
 
     }
 
