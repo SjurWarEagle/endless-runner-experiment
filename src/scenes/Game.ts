@@ -29,11 +29,19 @@ export default class Game extends Phaser.Scene {
     public create() {
         const height = this.scale.height;
         const width = this.scale.width;
+
+        this.scale.displaySize.setAspectRatio( width/height );
+        this.scale.refresh();
+
+
         this.background = this.add.tileSprite(0, 0, width, height, TextureKeys.Background)
             .setOrigin(0, 0)
             .setScrollFactor(0, 0);
+        // this.util.scaleToGameW(this.background);
 
         this.laserObstacle = new LaserObstacle(this, 900, 100)
+        // this.util.scaleToGameW(this.laserObstacle);
+
         this.add.existing(this.laserObstacle)
 
         this.coins = this.physics.add.staticGroup();

@@ -5,9 +5,14 @@ import Preloader from './scenes/Preloader'
 import GameOver from "~/scenes/GameOver";
 
 const config: Phaser.Types.Core.GameConfig = {
+	parent: 'mygame',
 	type: Phaser.AUTO,
 	width: 800,
 	height: 640,
+	scale: {
+		mode: Phaser.Scale.FIT,
+		// ...
+	},
 	physics: {
 		default: 'arcade',
 		arcade: {
