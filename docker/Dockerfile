@@ -20,6 +20,7 @@ COPY ./package-lock.json /project
 COPY ./LICENSE /project
 COPY ./.eslintignore /project
 COPY ./.eslintrc.js /project
+COPY ./tsconfig.json /project
 
 WORKDIR /project
 
