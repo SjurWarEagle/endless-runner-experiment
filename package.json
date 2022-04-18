@@ -8,8 +8,8 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "eslint ./src --ext .js,.jsx,.ts,.tsx",
 		"ncu": "ncu -x typescript -u ",
-		"git:commit": "git commit -m \"update dependencies\"",
 		"git:add": "git add package.json package-lock.json",
+		"git:commit": "git commit -m \"update dependencies\"",
 		"git:push": "git push",
 		"dependencies:install": "npm install",
 		"update:dependencies and build": "run-s ncu dependencies:install build git"
@@ -24,7 +24,7 @@
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "5.20.0",
 		"@typescript-eslint/parser": "5.20.0",
-		"npm-check-updates": "12.5.8",
+		"npm-check-updates": "12.5.9",
 		"npm-run-all": "4.1.5",
 		"prettier": "2.6.2",
 		"eslint": "8.13.0",
