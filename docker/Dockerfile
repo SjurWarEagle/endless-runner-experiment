@@ -16,7 +16,10 @@ RUN mkdir -p /project/src/
 COPY ./public /project/public
 COPY ./src /project/src
 COPY ./package.json /project
+COPY ./package-lock.json /project
 COPY ./LICENSE /project
+COPY ./.eslintignore /project
+COPY ./.eslintrc.js /project
 
 WORKDIR /project
 
