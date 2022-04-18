@@ -5,7 +5,7 @@ import RocketMouse from "~/game/RocketMouse";
 import LaserObstacle from "~/game/LaserObstacle";
 
 export default class Game extends Phaser.Scene {
-    private CNT_COINS: number = 10;
+    private CNT_COINS = 10;
     // create the background class property
     private mouse!: RocketMouse;
     private background!: Phaser.GameObjects.TileSprite;
@@ -107,22 +107,22 @@ export default class Game extends Phaser.Scene {
 
         this.input.mouse.disableContextMenu();
         this.input.mouse.enabled = true;
-        this.input.on('pointerdown', (pointer) => {
+        this.input.on('pointerdown', () => {
             this.mouse.jump(true);
         });
-        this.input.on('pointerup', (pointer) => {
+        this.input.on('pointerup', () => {
             this.mouse.jump(false);
         });
-        this.input.keyboard.on('keydown-SPACE', (pointer) => {
+        this.input.keyboard.on('keydown-SPACE', () => {
             this.mouse.jump(true);
         });
-        this.input.keyboard.on('keyup-SPACE', (pointer) => {
+        this.input.keyboard.on('keyup-SPACE', () => {
             this.mouse.jump(false);
         });
 
     }
 
-    private handleTouchedGateBorder(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+    private handleTouchedGateBorder() {
         if ((this.laserObstacle.top.getData('touched')) || (this.laserObstacle.bottom.getData('touched'))) {
             return;
         }
@@ -132,8 +132,10 @@ export default class Game extends Phaser.Scene {
         this.scoreLabel.text = `Score: ${this.score}`;
     }
 
+    // noinspection JSUnusedLocalSymbols
     private handleCollectCoin(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-        // obj2 will be the coin
+        // eslint-disable-next-line
+        const player = obj1 as Phaser.Physics.Arcade.Sprite
         const coin = obj2 as Phaser.Physics.Arcade.Sprite
         // use the group to hide it
         this.coins.killAndHide(coin)
@@ -146,7 +148,6 @@ export default class Game extends Phaser.Scene {
 
     private handleOverlapLaser(
         obj1: Phaser.GameObjects.GameObject,
-        obj2: Phaser.GameObjects.GameObject
     ) {
         const gate = obj1 as LaserObstacle;
         gate.touched = true;
@@ -196,7 +197,7 @@ export default class Game extends Phaser.Scene {
         }
     }
 
-    update(t: number, dt: number) {
+    update() {
         // scroll the background
         this.background.setTilePosition(this.cameras.main.scrollX);
 
@@ -222,7 +223,7 @@ export default class Game extends Phaser.Scene {
         const scrollX = this.cameras.main.scrollX
         const rightEdge = scrollX + this.scale.width
         // start at 100 pixels past the right side of the screen
-        let x = rightEdge + Phaser.Math.Between(100, 1000);
+        const x = rightEdge + Phaser.Math.Between(100, 1000);
 
         const coin = this.coins.get(
             x,

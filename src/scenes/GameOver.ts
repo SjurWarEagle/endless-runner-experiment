@@ -29,7 +29,7 @@ export default class GameOver extends Phaser.Scene {
         this.input.keyboard.once('keydown-SPACE', () => {
             this.startGame();
         });
-        this.input.on('pointerdown', (pointer) => {
+        this.input.on('pointerdown', () => {
             this.startGame();
         })
     }

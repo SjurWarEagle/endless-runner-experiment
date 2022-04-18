@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 import TextureKeys from "~/consts/TextureKeys";
 
 export default class LaserObstacle extends Phaser.GameObjects.Container {
-    public touched: boolean = false;
+    public touched = false;
     public bottom: Phaser.GameObjects.Image;
     public top: Phaser.GameObjects.Image;
     private myScene: Phaser.Scene;
