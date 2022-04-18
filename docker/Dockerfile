@@ -24,7 +24,7 @@ COPY ./tsconfig.json /project
 
 WORKDIR /project
 
-RUN npm install -g parcel-bundler
+#RUN npm install -g parcel-bundler
 
 RUN npm install
 RUN npm run lint
